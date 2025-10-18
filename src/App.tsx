@@ -1,8 +1,17 @@
 import { Board } from './components/game/Board';
-import { createEmptyBoard } from './utils/boardUtils';
+import { useGame } from './hooks/useGame';
+import { useKeyboard } from './hooks/useKeyboard';
 
 function App() {
-  const board = createEmptyBoard();
+  const { board, gameState, moveLeft, moveRight, moveDown, rotate, togglePause, startGame } = useGame();
+
+  useKeyboard({
+    onLeft: moveLeft,
+    onRight: moveRight,
+    onDown: moveDown,
+    onRotate: rotate,
+    onPause: togglePause,
+  });
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 flex items-center justify-center">
@@ -10,7 +19,29 @@ function App() {
         <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
           English Tetris
         </h1>
-        <Board board={board} />
+
+        {gameState === 'idle' && (
+          <button
+            onClick={startGame}
+            className="px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors"
+          >
+            Start Game
+          </button>
+        )}
+
+        {gameState !== 'idle' && (
+          <>
+            <Board board={board} />
+            <div className="text-center text-gray-700 dark:text-gray-300">
+              <p className="font-semibold">
+                {gameState === 'paused' ? 'PAUSED' : 'PLAYING'}
+              </p>
+              <p className="text-sm mt-2">
+                ← → : Move | ↑/Space: Rotate | ↓: Drop | P: Pause
+              </p>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

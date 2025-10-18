@@ -20,13 +20,11 @@ export const Board = ({ board }: BoardProps) => {
         row.map((cell, x) => (
           <div
             key={`${y}-${x}`}
-            className={`
-              ${cell ? 'bg-gray-600' : 'bg-gray-200 dark:bg-gray-800'}
-              border border-gray-300 dark:border-gray-700
-            `}
+            className="border border-gray-300 dark:border-gray-700"
             style={{
               width: BLOCK_SIZE,
               height: BLOCK_SIZE,
+              backgroundColor: cell || '#e5e7eb',
             }}
           />
         ))
