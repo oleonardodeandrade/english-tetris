@@ -29,7 +29,21 @@ function App() {
           </button>
         )}
 
-        {gameState !== 'idle' && (
+        {gameState === 'gameOver' && (
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-red-600 dark:text-red-400 mb-4">
+              Game Over
+            </h2>
+            <button
+              onClick={startGame}
+              className="px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors"
+            >
+              Play Again
+            </button>
+          </div>
+        )}
+
+        {(gameState === 'playing' || gameState === 'paused') && (
           <>
             <Board board={board} />
             <div className="text-center text-gray-700 dark:text-gray-300">
