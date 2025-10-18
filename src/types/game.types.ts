@@ -1,6 +1,9 @@
-export type CellValue = 0 | string;
+export type Cell = {
+  color: string;
+  letter: string;
+} | null;
 
-export type Board = CellValue[][];
+export type Board = Cell[][];
 
 export type Position = {
   x: number;
@@ -13,6 +16,7 @@ export type Tetromino = {
   type: TetrominoType;
   shape: number[][];
   color: string;
+  letters: string[][];
 };
 
 export type GameState = 'idle' | 'playing' | 'paused' | 'gameOver';

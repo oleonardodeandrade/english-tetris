@@ -1,6 +1,13 @@
 import type { Tetromino, TetrominoType } from '../types/game.types';
+import { getRandomLetter } from './letterFrequency';
 
-export const TETROMINOES: Record<TetrominoType, Tetromino> = {
+const createLettersForShape = (shape: number[][]): string[][] => {
+  return shape.map(row =>
+    row.map(cell => (cell ? getRandomLetter() : ''))
+  );
+};
+
+export const TETROMINOES: Record<TetrominoType, Omit<Tetromino, 'letters'>> = {
   I: {
     type: 'I',
     shape: [
@@ -70,5 +77,9 @@ export const TETROMINO_TYPES: TetrominoType[] = ['I', 'O', 'T', 'S', 'Z', 'J', '
 
 export const getRandomTetromino = (): Tetromino => {
   const randomType = TETROMINO_TYPES[Math.floor(Math.random() * TETROMINO_TYPES.length)];
-  return TETROMINOES[randomType];
+  const base = TETROMINOES[randomType];
+  return {
+    ...base,
+    letters: createLettersForShape(base.shape),
+  };
 };

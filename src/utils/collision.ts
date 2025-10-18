@@ -22,7 +22,7 @@ export const isValidMove = (
           return false;
         }
 
-        if (newY >= 0 && board[newY][newX] !== 0) {
+        if (newY >= 0 && board[newY][newX] !== null) {
           return false;
         }
       }
