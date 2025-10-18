@@ -5,7 +5,7 @@ export const detectCompletedLines = (board: Board): number[] => {
   const completedLines: number[] = [];
 
   for (let y = 0; y < board.length; y++) {
-    const isComplete = board[y].every(cell => cell !== 0);
+    const isComplete = board[y].every(cell => cell !== null);
     if (isComplete) {
       completedLines.push(y);
     }
@@ -19,7 +19,7 @@ export const removeCompletedLines = (board: Board, completedLines: number[]): Bo
 
   const linesRemoved = completedLines.length;
   const emptyLines = Array.from({ length: linesRemoved }, () =>
-    Array(BOARD_WIDTH).fill(0)
+    Array(BOARD_WIDTH).fill(null)
   );
 
   return [...emptyLines, ...newBoard];

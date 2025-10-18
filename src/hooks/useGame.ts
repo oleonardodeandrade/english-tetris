@@ -15,12 +15,15 @@ export const useGame = () => {
 
   const mergePieceToBoard = useCallback((): Board => {
     const newBoard = board.map(row => [...row]);
-    const { shape, color } = currentPiece;
+    const { shape, color, letters } = currentPiece;
 
     for (let y = 0; y < shape.length; y++) {
       for (let x = 0; x < shape[y].length; x++) {
         if (shape[y][x] && position.y + y >= 0) {
-          newBoard[position.y + y][position.x + x] = color;
+          newBoard[position.y + y][position.x + x] = {
+            color,
+            letter: letters[y][x],
+          };
         }
       }
     }
