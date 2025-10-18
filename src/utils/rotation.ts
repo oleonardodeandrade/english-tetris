@@ -1,4 +1,4 @@
-import { Tetromino } from '../types/game.types';
+import type { Tetromino } from '../types/game.types';
 
 export const rotateClockwise = (tetromino: Tetromino): Tetromino => {
   const { shape } = tetromino;

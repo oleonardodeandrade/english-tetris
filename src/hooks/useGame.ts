@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { Board, Tetromino, Position, GameState } from '../types/game.types';
+import type { Board, Tetromino, Position, GameState } from '../types/game.types';
 import { createEmptyBoard } from '../utils/boardUtils';
 import { getRandomTetromino } from '../data/tetrominoes';
 import { isValidMove } from '../utils/collision';

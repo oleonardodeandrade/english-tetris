@@ -1,4 +1,4 @@
-import { Board, Tetromino, Position } from '../types/game.types';
+import type { Board, Tetromino, Position } from '../types/game.types';
 import { BOARD_WIDTH, BOARD_HEIGHT } from '../constants/gameConfig';
 
 export const isValidMove = (

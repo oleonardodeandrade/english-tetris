@@ -1,4 +1,4 @@
-import { Board as BoardType } from '../../types/game.types';
+import type { Board as BoardType } from '../../types/game.types';
 import { BLOCK_SIZE } from '../../constants/gameConfig';
 
 interface BoardProps {

@@ -1,4 +1,4 @@
-import { Tetromino, TetrominoType } from '../types/game.types';
+import type { Tetromino, TetrominoType } from '../types/game.types';
 
 export const TETROMINOES: Record<TetrominoType, Tetromino> = {
   I: {
