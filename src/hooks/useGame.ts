@@ -4,6 +4,7 @@ import { createEmptyBoard } from '../utils/boardUtils';
 import { getRandomTetromino } from '../data/tetrominoes';
 import { isValidMove } from '../utils/collision';
 import { rotateClockwise } from '../utils/rotation';
+import { detectCompletedLines, removeCompletedLines } from '../utils/lineClearing';
 import { GAME_SPEED } from '../constants/gameConfig';
 
 export const useGame = () => {
@@ -33,10 +34,25 @@ export const useGame = () => {
     if (isValidMove(board, currentPiece, newPosition)) {
       setPosition(newPosition);
     } else {
-      const newBoard = mergePieceToBoard();
+      let newBoard = mergePieceToBoard();
+
+      const completedLines = detectCompletedLines(newBoard);
+      if (completedLines.length > 0) {
+        newBoard = removeCompletedLines(newBoard, completedLines);
+      }
+
       setBoard(newBoard);
-      setCurrentPiece(getRandomTetromino());
-      setPosition({ x: 3, y: 0 });
+
+      const nextPiece = getRandomTetromino();
+      const nextPosition = { x: 3, y: 0 };
+
+      if (!isValidMove(newBoard, nextPiece, nextPosition)) {
+        setGameState('gameOver');
+        return;
+      }
+
+      setCurrentPiece(nextPiece);
+      setPosition(nextPosition);
     }
   }, [board, currentPiece, position, mergePieceToBoard]);
 
