@@ -1,9 +1,10 @@
 import { Board } from './components/game/Board';
+import { ScoreBoard } from './components/ui/ScoreBoard';
 import { useGame } from './hooks/useGame';
 import { useKeyboard } from './hooks/useKeyboard';
 
 function App() {
-  const { board, gameState, moveLeft, moveRight, moveDown, rotate, togglePause, startGame } = useGame();
+  const { board, gameState, score, moveLeft, moveRight, moveDown, rotate, togglePause, startGame } = useGame();
 
   useKeyboard({
     onLeft: moveLeft,
@@ -45,14 +46,19 @@ function App() {
 
         {(gameState === 'playing' || gameState === 'paused') && (
           <>
-            <Board board={board} />
-            <div className="text-center text-gray-700 dark:text-gray-300">
-              <p className="font-semibold">
-                {gameState === 'paused' ? 'PAUSED' : 'PLAYING'}
-              </p>
-              <p className="text-sm mt-2">
-                ← → : Move | ↑/Space: Rotate | ↓: Drop | P: Pause
-              </p>
+            <div className="flex gap-8 items-start">
+              <div>
+                <Board board={board} />
+                <div className="text-center text-gray-700 dark:text-gray-300 mt-4">
+                  <p className="font-semibold">
+                    {gameState === 'paused' ? 'PAUSED' : 'PLAYING'}
+                  </p>
+                  <p className="text-sm mt-2">
+                    ← → : Move | ↑/Space: Rotate | ↓: Drop | P: Pause
+                  </p>
+                </div>
+              </div>
+              <ScoreBoard score={score} />
             </div>
           </>
         )}
