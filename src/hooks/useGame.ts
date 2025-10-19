@@ -1,17 +1,23 @@
 import { useState, useCallback, useEffect } from 'react';
-import type { Board, Tetromino, Position, GameState } from '../types/game.types';
+import type { Board, Tetromino, Position, GameState, Score } from '../types/game.types';
 import { createEmptyBoard } from '../utils/boardUtils';
 import { getRandomTetromino } from '../data/tetrominoes';
 import { isValidMove } from '../utils/collision';
 import { rotateClockwise } from '../utils/rotation';
 import { detectCompletedLines, removeCompletedLines } from '../utils/lineClearing';
-import { GAME_SPEED } from '../constants/gameConfig';
+import { GAME_SPEED, SCORING } from '../constants/gameConfig';
 
 export const useGame = () => {
   const [board, setBoard] = useState<Board>(createEmptyBoard());
   const [currentPiece, setCurrentPiece] = useState<Tetromino>(getRandomTetromino());
   const [position, setPosition] = useState<Position>({ x: 3, y: 0 });
   const [gameState, setGameState] = useState<GameState>('idle');
+  const [score, setScore] = useState<Score>({
+    current: 0,
+    level: 1,
+    linesCleared: 0,
+    combo: 0,
+  });
 
   const mergePieceToBoard = useCallback((): Board => {
     const newBoard = board.map(row => [...row]);
@@ -42,6 +48,21 @@ export const useGame = () => {
       const completedLines = detectCompletedLines(newBoard);
       if (completedLines.length > 0) {
         newBoard = removeCompletedLines(newBoard, completedLines);
+
+        const linesCount = completedLines.length;
+        const pointsEarned = linesCount * SCORING.LINE_CLEAR;
+
+        setScore(prev => {
+          const newLinesCleared = prev.linesCleared + linesCount;
+          const newLevel = Math.floor(newLinesCleared / SCORING.LINES_PER_LEVEL) + 1;
+
+          return {
+            ...prev,
+            current: prev.current + pointsEarned,
+            linesCleared: newLinesCleared,
+            level: newLevel,
+          };
+        });
       }
 
       setBoard(newBoard);
@@ -88,24 +109,36 @@ export const useGame = () => {
     setBoard(createEmptyBoard());
     setCurrentPiece(getRandomTetromino());
     setPosition({ x: 3, y: 0 });
+    setScore({
+      current: 0,
+      level: 1,
+      linesCleared: 0,
+      combo: 0,
+    });
     setGameState('playing');
   }, []);
 
   useEffect(() => {
     if (gameState !== 'playing') return;
 
+    const speed = Math.max(
+      GAME_SPEED.MIN,
+      GAME_SPEED.INITIAL - (score.level - 1) * GAME_SPEED.DECREASE_PER_LEVEL
+    );
+
     const interval = setInterval(() => {
       moveDown();
-    }, GAME_SPEED.INITIAL);
+    }, speed);
 
     return () => clearInterval(interval);
-  }, [gameState, moveDown]);
+  }, [gameState, moveDown, score.level]);
 
   const displayBoard = mergePieceToBoard();
 
   return {
     board: displayBoard,
     gameState,
+    score,
     moveLeft,
     moveRight,
     moveDown,
