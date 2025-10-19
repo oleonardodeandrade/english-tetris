@@ -7,3 +7,8 @@ export const GAME_SPEED = {
   MIN: 100,
   DECREASE_PER_LEVEL: 100,
 };
+
+export const SCORING = {
+  LINE_CLEAR: 100,
+  LINES_PER_LEVEL: 10,
+};
