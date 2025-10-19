@@ -1,10 +1,11 @@
 import { Board } from './components/game/Board';
 import { ScoreBoard } from './components/ui/ScoreBoard';
+import { NextPiecePreview } from './components/ui/NextPiecePreview';
 import { useGame } from './hooks/useGame';
 import { useKeyboard } from './hooks/useKeyboard';
 
 function App() {
-  const { board, gameState, score, moveLeft, moveRight, moveDown, rotate, togglePause, startGame } = useGame();
+  const { board, gameState, score, nextPiece, moveLeft, moveRight, moveDown, rotate, togglePause, startGame } = useGame();
 
   useKeyboard({
     onLeft: moveLeft,
@@ -58,7 +59,10 @@ function App() {
                   </p>
                 </div>
               </div>
-              <ScoreBoard score={score} />
+              <div className="flex flex-col gap-4">
+                <ScoreBoard score={score} />
+                <NextPiecePreview nextPiece={nextPiece} />
+              </div>
             </div>
           </>
         )}

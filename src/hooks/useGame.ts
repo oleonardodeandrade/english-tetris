@@ -10,6 +10,7 @@ import { GAME_SPEED, SCORING } from '../constants/gameConfig';
 export const useGame = () => {
   const [board, setBoard] = useState<Board>(createEmptyBoard());
   const [currentPiece, setCurrentPiece] = useState<Tetromino>(getRandomTetromino());
+  const [nextPiece, setNextPiece] = useState<Tetromino>(getRandomTetromino());
   const [position, setPosition] = useState<Position>({ x: 3, y: 0 });
   const [gameState, setGameState] = useState<GameState>('idle');
   const [score, setScore] = useState<Score>({
@@ -67,7 +68,6 @@ export const useGame = () => {
 
       setBoard(newBoard);
 
-      const nextPiece = getRandomTetromino();
       const nextPosition = { x: 3, y: 0 };
 
       if (!isValidMove(newBoard, nextPiece, nextPosition)) {
@@ -76,9 +76,10 @@ export const useGame = () => {
       }
 
       setCurrentPiece(nextPiece);
+      setNextPiece(getRandomTetromino());
       setPosition(nextPosition);
     }
-  }, [board, currentPiece, position, mergePieceToBoard]);
+  }, [board, currentPiece, nextPiece, position, mergePieceToBoard]);
 
   const moveLeft = useCallback(() => {
     const newPosition = { ...position, x: position.x - 1 };
@@ -108,6 +109,7 @@ export const useGame = () => {
   const startGame = useCallback(() => {
     setBoard(createEmptyBoard());
     setCurrentPiece(getRandomTetromino());
+    setNextPiece(getRandomTetromino());
     setPosition({ x: 3, y: 0 });
     setScore({
       current: 0,
@@ -139,6 +141,7 @@ export const useGame = () => {
     board: displayBoard,
     gameState,
     score,
+    nextPiece,
     moveLeft,
     moveRight,
     moveDown,
