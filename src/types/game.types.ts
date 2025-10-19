@@ -20,3 +20,10 @@ export type Tetromino = {
 };
 
 export type GameState = 'idle' | 'playing' | 'paused' | 'gameOver';
+
+export type Score = {
+  current: number;
+  level: number;
+  linesCleared: number;
+  combo: number;
+};
