@@ -41,7 +41,7 @@ export const useGame = () => {
     return newBoard;
   }, [board, currentPiece, position]);
 
-  const moveDown = useCallback(async () => {
+  const moveDown = useCallback(() => {
     const newPosition = { ...position, y: position.y + 1 };
 
     if (isValidMove(board, currentPiece, newPosition)) {
@@ -57,7 +57,7 @@ export const useGame = () => {
         let longestWord: { word: string; isValid: boolean } = { word: '', isValid: false };
 
         for (const word of allWords) {
-          const result = await validateWords([word]);
+          const result = validateWords([word]);
           if (result[0].isValid) {
             longestWord = result[0];
             break;
