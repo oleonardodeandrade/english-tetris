@@ -14,7 +14,7 @@ export const NextPiecePreview = ({ nextPiece }: NextPiecePreviewProps) => {
   const height = rows * BLOCK_SIZE;
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-[200px]">
       <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide text-center mb-4">
         Next Piece
       </h3>
