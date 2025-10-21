@@ -54,13 +54,15 @@ export const useGame = () => {
         const wordsFromLines = extractWordsFromLines(newBoard, completedLines);
         const allWords = wordsFromLines.flat();
 
-        const validationResults = await validateWords(allWords);
-        const validWords = validationResults.filter(result => result.isValid);
+        let longestWord: { word: string; isValid: boolean } = { word: '', isValid: false };
 
-        const longestWord = validWords.reduce((longest, current) =>
-          current.word.length > longest.word.length ? current : longest,
-          { word: '', isValid: false }
-        );
+        for (const word of allWords) {
+          const result = await validateWords([word]);
+          if (result[0].isValid) {
+            longestWord = result[0];
+            break;
+          }
+        }
 
         newBoard = removeCompletedLines(newBoard, completedLines);
 
