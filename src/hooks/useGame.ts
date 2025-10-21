@@ -1,10 +1,12 @@
 import { useState, useCallback, useEffect } from 'react';
-import type { Board, Tetromino, Position, GameState, Score } from '../types/game.types';
+import type { Board, Tetromino, Position, GameState, Score, FoundWord } from '../types/game.types';
 import { createEmptyBoard } from '../utils/boardUtils';
 import { getRandomTetromino } from '../data/tetrominoes';
 import { isValidMove } from '../utils/collision';
 import { rotateClockwise } from '../utils/rotation';
 import { detectCompletedLines, removeCompletedLines } from '../utils/lineClearing';
+import { extractWordsFromLines } from '../utils/wordExtraction';
+import { validateWords } from '../services/wordService';
 import { GAME_SPEED, SCORING } from '../constants/gameConfig';
 
 export const useGame = () => {
@@ -19,6 +21,7 @@ export const useGame = () => {
     linesCleared: 0,
     combo: 0,
   });
+  const [foundWords, setFoundWords] = useState<FoundWord[]>([]);
 
   const mergePieceToBoard = useCallback((): Board => {
     const newBoard = board.map(row => [...row]);
@@ -48,10 +51,38 @@ export const useGame = () => {
 
       const completedLines = detectCompletedLines(newBoard);
       if (completedLines.length > 0) {
+        const wordsFromLines = extractWordsFromLines(newBoard, completedLines);
+        const allWords = wordsFromLines.flat();
+
+        let longestWord: { word: string; isValid: boolean } = { word: '', isValid: false };
+
+        for (const word of allWords) {
+          const result = validateWords([word]);
+          if (result[0].isValid) {
+            longestWord = result[0];
+            break;
+          }
+        }
+
         newBoard = removeCompletedLines(newBoard, completedLines);
 
         const linesCount = completedLines.length;
-        const pointsEarned = linesCount * SCORING.LINE_CLEAR;
+        let pointsEarned = linesCount * SCORING.LINE_CLEAR;
+
+        if (longestWord.isValid) {
+          const wordBonus = Math.floor(
+            SCORING.WORD_BASE *
+            longestWord.word.length *
+            SCORING.WORD_LENGTH_MULTIPLIER
+          );
+          pointsEarned += wordBonus;
+
+          setFoundWords(prev => [...prev, {
+            word: longestWord.word,
+            points: wordBonus,
+            lineIndex: completedLines[0],
+          }]);
+        }
 
         setScore(prev => {
           const newLinesCleared = prev.linesCleared + linesCount;
@@ -117,6 +148,7 @@ export const useGame = () => {
       linesCleared: 0,
       combo: 0,
     });
+    setFoundWords([]);
     setGameState('playing');
   }, []);
 
@@ -142,6 +174,7 @@ export const useGame = () => {
     gameState,
     score,
     nextPiece,
+    foundWords,
     moveLeft,
     moveRight,
     moveDown,

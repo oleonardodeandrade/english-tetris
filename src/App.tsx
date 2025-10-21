@@ -1,11 +1,12 @@
 import { Board } from './components/game/Board';
 import { ScoreBoard } from './components/ui/ScoreBoard';
 import { NextPiecePreview } from './components/ui/NextPiecePreview';
+import { FoundWords } from './components/ui/FoundWords';
 import { useGame } from './hooks/useGame';
 import { useKeyboard } from './hooks/useKeyboard';
 
 function App() {
-  const { board, gameState, score, nextPiece, moveLeft, moveRight, moveDown, rotate, togglePause, startGame } = useGame();
+  const { board, gameState, score, nextPiece, foundWords, moveLeft, moveRight, moveDown, rotate, togglePause, startGame } = useGame();
 
   useKeyboard({
     onLeft: moveLeft,
@@ -62,6 +63,7 @@ function App() {
               <div className="flex flex-col gap-4">
                 <ScoreBoard score={score} />
                 <NextPiecePreview nextPiece={nextPiece} />
+                <FoundWords words={foundWords} />
               </div>
             </div>
           </>
