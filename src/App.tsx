@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Board } from './components/game/Board';
 import { ScoreBoard } from './components/ui/ScoreBoard';
 import { NextPiecePreview } from './components/ui/NextPiecePreview';
 import { FoundWords } from './components/ui/FoundWords';
+import { WordCelebration } from './components/ui/WordCelebration';
 import { GameOverModal } from './components/ui/GameOverModal';
 import { PauseModal } from './components/ui/PauseModal';
 import { HelpModal } from './components/ui/HelpModal';
@@ -12,6 +13,8 @@ import { useKeyboard } from './hooks/useKeyboard';
 function App() {
   const { board, gameState, score, nextPiece, foundWords, moveLeft, moveRight, moveDown, rotate, togglePause, startGame } = useGame();
   const [showHelp, setShowHelp] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [lastWord, setLastWord] = useState({ word: '', points: 0 });
 
   useKeyboard({
     onLeft: moveLeft,
@@ -20,6 +23,14 @@ function App() {
     onRotate: rotate,
     onPause: togglePause,
   });
+
+  useEffect(() => {
+    if (foundWords.length > 0) {
+      const latestWord = foundWords[foundWords.length - 1];
+      setLastWord(latestWord);
+      setShowCelebration(true);
+    }
+  }, [foundWords.length]);
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col items-center justify-center p-4">
@@ -59,6 +70,12 @@ function App() {
       <HelpModal
         isOpen={showHelp}
         onClose={() => setShowHelp(false)}
+      />
+
+      <WordCelebration
+        word={lastWord.word}
+        points={lastWord.points}
+        show={showCelebration}
       />
 
       {(gameState === 'playing' || gameState === 'paused') && (
