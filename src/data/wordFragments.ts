@@ -72,3 +72,14 @@ export const getWordFragment = (length: number): string => {
 
   return validFragments[Math.floor(Math.random() * validFragments.length)];
 };
+
+export const getCompleteWord = (length: number): string | null => {
+  const words = wordlistText
+    .split('\n')
+    .map(w => w.trim().toUpperCase())
+    .filter(w => w.length === length);
+
+  if (words.length === 0) return null;
+
+  return words[Math.floor(Math.random() * words.length)];
+};
