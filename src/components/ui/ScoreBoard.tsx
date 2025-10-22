@@ -6,7 +6,7 @@ type ScoreBoardProps = {
 
 export const ScoreBoard = ({ score }: ScoreBoardProps) => {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 space-y-4">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 space-y-4 w-[200px]">
       <div className="text-center">
         <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
           Score
