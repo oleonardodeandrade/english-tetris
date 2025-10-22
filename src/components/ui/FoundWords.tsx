@@ -21,8 +21,12 @@ export const FoundWords = ({ words }: FoundWordsProps) => {
           <div className="space-y-2">
             {recentWords.map((foundWord, index) => (
               <div
-                key={`${foundWord.word}-${index}`}
-                className="flex items-center justify-between bg-purple-100 dark:bg-purple-900/30 rounded px-3 py-2"
+                key={`${foundWord.word}-${words.length - index}`}
+                className="flex items-center justify-between bg-purple-100 dark:bg-purple-900/30 rounded px-3 py-2 animate-slideIn"
+                style={{
+                  animationDelay: `${index * 0.1}s`,
+                  animationFillMode: 'backwards'
+                }}
               >
                 <span className="font-semibold text-purple-900 dark:text-purple-200 uppercase">
                   {foundWord.word}
