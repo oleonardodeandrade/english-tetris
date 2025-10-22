@@ -1,9 +1,33 @@
 import type { Tetromino, TetrominoType } from '../types/game.types';
-import { getRandomLetter } from './letterFrequency';
+import { getSmartLetter, getWordFragment } from './wordFragments';
 
 const createLettersForShape = (shape: number[][]): string[][] => {
+  const blockCount = shape.flat().filter(cell => cell === 1).length;
+
+  const useFragment = blockCount >= 3 && Math.random() < 0.6;
+
+  if (useFragment) {
+    const fragmentLength = Math.min(blockCount, Math.floor(Math.random() * 2) + 2);
+    const fragment = getWordFragment(fragmentLength);
+    const letters: string[] = fragment.split('');
+
+    for (let i = letters.length; i < blockCount; i++) {
+      letters.push(getSmartLetter());
+    }
+
+    let letterIndex = 0;
+    return shape.map(row =>
+      row.map(cell => {
+        if (cell) {
+          return letters[letterIndex++] || getSmartLetter();
+        }
+        return '';
+      })
+    );
+  }
+
   return shape.map(row =>
-    row.map(cell => (cell ? getRandomLetter() : ''))
+    row.map(cell => (cell ? getSmartLetter() : ''))
   );
 };
 
