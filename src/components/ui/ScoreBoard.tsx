@@ -35,6 +35,17 @@ export const ScoreBoard = ({ score }: ScoreBoardProps) => {
           </p>
         </div>
       </div>
+
+      {score.combo > 0 && (
+        <div className="text-center bg-gradient-to-r from-orange-400 to-red-500 rounded-lg p-3 animate-pulse">
+          <h3 className="text-xs font-semibold text-white uppercase tracking-wide">
+            Combo
+          </h3>
+          <p className="text-2xl font-bold text-white">
+            {score.combo}x
+          </p>
+        </div>
+      )}
     </div>
   );
 };
