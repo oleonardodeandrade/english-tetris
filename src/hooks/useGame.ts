@@ -67,32 +67,43 @@ export const useGame = () => {
         newBoard = removeCompletedLines(newBoard, completedLines);
 
         const linesCount = completedLines.length;
-        let pointsEarned = linesCount * SCORING.LINE_CLEAR;
-
-        if (longestWord.isValid) {
-          const wordBonus = Math.floor(
-            SCORING.WORD_BASE *
-            longestWord.word.length *
-            SCORING.WORD_LENGTH_MULTIPLIER
-          );
-          pointsEarned += wordBonus;
-
-          setFoundWords(prev => [...prev, {
-            word: longestWord.word,
-            points: wordBonus,
-            lineIndex: completedLines[0],
-          }]);
-        }
+        const pointsEarned = linesCount * SCORING.LINE_CLEAR;
 
         setScore(prev => {
           const newLinesCleared = prev.linesCleared + linesCount;
           const newLevel = Math.floor(newLinesCleared / SCORING.LINES_PER_LEVEL) + 1;
+          let newCombo = prev.combo;
+          let finalPoints = pointsEarned;
+
+          if (longestWord.isValid) {
+            newCombo = prev.combo + 1;
+
+            const comboMultiplier = newCombo > 1 ? 1 + (newCombo - 1) * (SCORING.COMBO_MULTIPLIER - 1) : 1;
+
+            const wordBonus = Math.floor(
+              SCORING.WORD_BASE *
+              longestWord.word.length *
+              SCORING.WORD_LENGTH_MULTIPLIER *
+              comboMultiplier
+            );
+
+            finalPoints += wordBonus;
+
+            setFoundWords(prevWords => [...prevWords, {
+              word: longestWord.word,
+              points: wordBonus,
+              lineIndex: completedLines[0],
+            }]);
+          } else {
+            newCombo = 0;
+          }
 
           return {
             ...prev,
-            current: prev.current + pointsEarned,
+            current: prev.current + finalPoints,
             linesCleared: newLinesCleared,
             level: newLevel,
+            combo: newCombo,
           };
         });
       }
