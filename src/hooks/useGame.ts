@@ -80,11 +80,13 @@ export const useGame = () => {
 
             const comboMultiplier = newCombo > 1 ? 1 + (newCombo - 1) * (SCORING.COMBO_MULTIPLIER - 1) : 1;
 
+            const wordLength = longestWord.word.length;
+            const difficultyBonus = wordLength >= 6 ? (wordLength - 5) * SCORING.DIFFICULTY_BONUS_PER_LETTER : 0;
+            const levelMultiplier = 1 + (newLevel - 1) * SCORING.LEVEL_MULTIPLIER;
+
+            const baseWordPoints = SCORING.WORD_BASE * wordLength * SCORING.WORD_LENGTH_MULTIPLIER;
             const wordBonus = Math.floor(
-              SCORING.WORD_BASE *
-              longestWord.word.length *
-              SCORING.WORD_LENGTH_MULTIPLIER *
-              comboMultiplier
+              (baseWordPoints + difficultyBonus) * comboMultiplier * levelMultiplier
             );
 
             finalPoints += wordBonus;
