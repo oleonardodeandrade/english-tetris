@@ -8,12 +8,12 @@ export const FoundWords = ({ words }: FoundWordsProps) => {
   const recentWords = words.slice(-5).reverse();
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-lg w-[200px]">
-      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3">
+    <div className="bg-white/20 backdrop-blur-md rounded-2xl p-6 shadow-2xl w-[200px] border border-white/30">
+      <h3 className="text-lg font-bold text-white mb-4">
         Words Found
       </h3>
       {words.length === 0 ? (
-        <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-4">
+        <p className="text-sm text-white/70 text-center py-4">
           No words yet
         </p>
       ) : (
@@ -22,23 +22,23 @@ export const FoundWords = ({ words }: FoundWordsProps) => {
             {recentWords.map((foundWord, index) => (
               <div
                 key={`${foundWord.word}-${words.length - index}`}
-                className="flex items-center justify-between bg-purple-100 dark:bg-purple-900/30 rounded px-3 py-2 animate-slideIn"
+                className="flex items-center justify-between bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl px-3 py-2 animate-slideIn shadow-lg"
                 style={{
                   animationDelay: `${index * 0.1}s`,
                   animationFillMode: 'backwards'
                 }}
               >
-                <span className="font-semibold text-purple-900 dark:text-purple-200 uppercase">
+                <span className="font-bold text-white uppercase">
                   {foundWord.word}
                 </span>
-                <span className="text-sm text-purple-700 dark:text-purple-300">
+                <span className="text-sm font-semibold text-white/90 bg-white/20 px-2 py-1 rounded-lg">
                   +{foundWord.points}
                 </span>
               </div>
             ))}
           </div>
           {words.length > 5 && (
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
+            <p className="text-xs text-white/70 mt-3 text-center">
               Showing last 5 of {words.length} words
             </p>
           )}
