@@ -27,3 +27,9 @@ export type Score = {
   linesCleared: number;
   combo: number;
 };
+
+export type FoundWord = {
+  word: string;
+  points: number;
+  lineIndex: number;
+};

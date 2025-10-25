@@ -1,11 +1,22 @@
+import { useState, useEffect } from 'react';
 import { Board } from './components/game/Board';
 import { ScoreBoard } from './components/ui/ScoreBoard';
 import { NextPiecePreview } from './components/ui/NextPiecePreview';
+import { FoundWords } from './components/ui/FoundWords';
+import { WordCelebration } from './components/ui/WordCelebration';
+import { GameOverModal } from './components/ui/GameOverModal';
+import { PauseModal } from './components/ui/PauseModal';
+import { HelpModal } from './components/ui/HelpModal';
+import { Button } from './components/ui/Button';
+import { IconButton } from './components/ui/IconButton';
 import { useGame } from './hooks/useGame';
 import { useKeyboard } from './hooks/useKeyboard';
 
 function App() {
-  const { board, gameState, score, nextPiece, moveLeft, moveRight, moveDown, rotate, togglePause, startGame } = useGame();
+  const { board, gameState, score, nextPiece, foundWords, moveLeft, moveRight, moveDown, rotate, togglePause, startGame } = useGame();
+  const [showHelp, setShowHelp] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [lastWord, setLastWord] = useState({ word: '', points: 0 });
 
   useKeyboard({
     onLeft: moveLeft,
@@ -15,58 +26,88 @@ function App() {
     onPause: togglePause,
   });
 
+  useEffect(() => {
+    if (foundWords.length > 0) {
+      const latestWord = foundWords[foundWords.length - 1];
+      setLastWord(latestWord);
+      setShowCelebration(true);
+    }
+  }, [foundWords.length]);
+
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 flex items-center justify-center">
-      <div className="flex flex-col items-center gap-8">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400 flex flex-col items-center justify-center p-4">
+      <div className="flex items-center gap-4 mb-8">
+        <h1 className="text-5xl font-black text-gray-900 bg-gradient-to-r from-white to-purple-100 bg-clip-text drop-shadow-2xl">
           English Tetris
         </h1>
-
-        {gameState === 'idle' && (
-          <button
-            onClick={startGame}
-            className="px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors"
-          >
-            Start Game
-          </button>
-        )}
-
-        {gameState === 'gameOver' && (
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-red-600 dark:text-red-400 mb-4">
-              Game Over
-            </h2>
-            <button
-              onClick={startGame}
-              className="px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors"
-            >
-              Play Again
-            </button>
-          </div>
-        )}
-
-        {(gameState === 'playing' || gameState === 'paused') && (
-          <>
-            <div className="flex gap-8 items-start">
-              <div>
-                <Board board={board} />
-                <div className="text-center text-gray-700 dark:text-gray-300 mt-4">
-                  <p className="font-semibold">
-                    {gameState === 'paused' ? 'PAUSED' : 'PLAYING'}
-                  </p>
-                  <p className="text-sm mt-2">
-                    ← → : Move | ↑/Space: Rotate | ↓: Drop | P: Pause
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-col gap-4">
-                <ScoreBoard score={score} />
-                <NextPiecePreview nextPiece={nextPiece} />
-              </div>
-            </div>
-          </>
-        )}
+        <IconButton
+          onClick={() => setShowHelp(true)}
+          variant="ghost"
+          size="lg"
+          icon="?"
+          aria-label="Help"
+          title="Help"
+        />
       </div>
+
+      {gameState === 'idle' && (
+        <Button
+          onClick={startGame}
+          variant="primary"
+          size="xl"
+          icon={<span>🎮</span>}
+          iconPosition="left"
+        >
+          Start Game
+        </Button>
+      )}
+
+      <GameOverModal
+        isOpen={gameState === 'gameOver'}
+        score={score}
+        onPlayAgain={startGame}
+      />
+
+      <PauseModal
+        isOpen={gameState === 'paused'}
+        onResume={togglePause}
+      />
+
+      <HelpModal
+        isOpen={showHelp}
+        onClose={() => setShowHelp(false)}
+      />
+
+      <WordCelebration
+        word={lastWord.word}
+        points={lastWord.points}
+        show={showCelebration}
+      />
+
+      {(gameState === 'playing' || gameState === 'paused') && (
+        <div className="flex flex-row gap-6 items-start justify-center">
+          <div className="flex flex-col gap-4">
+            <ScoreBoard score={score} />
+            <NextPiecePreview nextPiece={nextPiece} />
+          </div>
+
+          <div className="flex flex-col items-center">
+            <Board board={board} />
+            <div className="text-center text-white mt-6 bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+              <p className="font-bold text-xl mb-2">
+                {gameState === 'paused' ? '⏸ PAUSED' : '▶ PLAYING'}
+              </p>
+              <p className="text-sm">
+                ← → : Move | ↑/Space: Rotate | ↓: Drop | P: Pause
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <FoundWords words={foundWords} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
