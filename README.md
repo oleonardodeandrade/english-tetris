@@ -9,7 +9,7 @@
 [![Deployed on Vercel](https://img.shields.io/badge/deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com)
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-06B6D4?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-06B6D4?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 
 [Play Now](https://english-tetris.vercel.app/) · [Report Bug](https://github.com/oleonardodeandrade/english-tetris/issues) · [Request Feature](https://github.com/oleonardodeandrade/english-tetris/issues)
 
@@ -84,7 +84,7 @@ Clear lines to prevent the board from filling up, and form valid English words f
 | **React** | 19 | UI Framework |
 | **TypeScript** | 5.9 | Type Safety |
 | **Vite** | 7 | Build Tool |
-| **Tailwind CSS** | 3 | Styling |
+| **Tailwind CSS** | 4 | Styling |
 | **Vercel** | Latest | Deployment |
 
 ### Additional Tools
