@@ -1,4 +1,5 @@
 import { Modal } from './Modal';
+import { Button } from './Button';
 import type { Score } from '../../types/game.types';
 
 interface GameOverModalProps {
@@ -41,12 +42,15 @@ export const GameOverModal = ({ isOpen, score, onPlayAgain }: GameOverModalProps
           </div>
         </div>
 
-        <button
+        <Button
           onClick={onPlayAgain}
-          className="w-full px-6 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-2xl hover:from-purple-700 hover:to-pink-700 transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-purple-500/50 text-lg"
+          variant="gradient"
+          size="xl"
+          className="w-full"
+          icon={<span>🎮</span>}
         >
           Play Again
-        </button>
+        </Button>
       </div>
     </Modal>
   );
