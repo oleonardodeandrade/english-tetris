@@ -17,6 +17,26 @@
 
 ---
 
+## 📸 Screenshots
+
+<div align="center">
+
+### Initial Screen
+<img src=".github/images/inicial-screen.png" alt="Initial Screen" width="600"/>
+
+### Gameplay
+<img src=".github/images/playing.png" alt="Gameplay" width="600"/>
+
+### Words Formation
+<img src=".github/images/formed-words.png" alt="Formed Words" width="600"/>
+
+### Game Over
+<img src=".github/images/game-over.png" alt="Game Over" width="600"/>
+
+</div>
+
+---
+
 ## 🌟 About
 
 **English Tetris** combines the addictive gameplay of classic Tetris with English vocabulary learning. Form words with letter-based Tetromino pieces, clear lines, and build combos while expanding your English vocabulary!
