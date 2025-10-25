@@ -1,4 +1,5 @@
 import { Modal } from './Modal';
+import { Button } from './Button';
 
 interface PauseModalProps {
   isOpen: boolean;
@@ -9,27 +10,38 @@ export const PauseModal = ({ isOpen, onResume }: PauseModalProps) => {
   return (
     <Modal isOpen={isOpen} onClose={onResume} title="Game Paused">
       <div className="space-y-6">
-        <div className="text-center text-gray-600 dark:text-gray-300">
-          <p className="text-lg mb-4">Take a break!</p>
-          <p className="text-sm">Press P or click Resume to continue</p>
+        <div className="text-center text-gray-700">
+          <p className="text-xl mb-4 font-semibold">Take a break! ☕</p>
+          <p className="text-sm text-gray-600">Press P or click Resume to continue</p>
         </div>
 
-        <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-4">
-          <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Controls:</h3>
-          <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-            <li>← → : Move piece</li>
-            <li>↑ / Space : Rotate piece</li>
-            <li>↓ : Drop faster</li>
-            <li>P : Pause/Resume</li>
+        <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-5 shadow-inner">
+          <h3 className="font-bold text-purple-900 mb-3 text-lg">⌨️ Controls:</h3>
+          <ul className="text-sm text-gray-700 space-y-2">
+            <li className="flex items-center gap-2">
+              <span className="font-bold text-purple-600">← →</span> Move piece
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="font-bold text-purple-600">↑ / Space</span> Rotate piece
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="font-bold text-purple-600">↓</span> Drop faster
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="font-bold text-purple-600">P</span> Pause/Resume
+            </li>
           </ul>
         </div>
 
-        <button
+        <Button
           onClick={onResume}
-          className="w-full px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors"
+          variant="gradient"
+          size="lg"
+          className="w-full"
+          icon={<span>▶</span>}
         >
           Resume Game
-        </button>
+        </Button>
       </div>
     </Modal>
   );

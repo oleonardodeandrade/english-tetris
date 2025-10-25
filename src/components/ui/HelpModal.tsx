@@ -1,4 +1,5 @@
 import { Modal } from './Modal';
+import { Button } from './Button';
 
 interface HelpModalProps {
   isOpen: boolean;
@@ -8,16 +9,16 @@ interface HelpModalProps {
 export const HelpModal = ({ isOpen, onClose }: HelpModalProps) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="How to Play">
-      <div className="space-y-4 text-gray-700 dark:text-gray-300">
+      <div className="space-y-4 text-gray-700">
         <section>
-          <h3 className="font-bold text-gray-900 dark:text-white mb-2">🎮 Goal</h3>
+          <h3 className="font-bold text-gray-900 mb-2 text-lg">🎮 Goal</h3>
           <p className="text-sm">
             Form English words by clearing lines! The letters on the blocks spell words when you complete a line.
           </p>
         </section>
 
         <section>
-          <h3 className="font-bold text-gray-900 dark:text-white mb-2">🎯 How to Score</h3>
+          <h3 className="font-bold text-gray-900 mb-2 text-lg">🎯 How to Score</h3>
           <ul className="text-sm space-y-1 list-disc list-inside">
             <li>Clear lines: 100 points each</li>
             <li>Form valid words: Bonus points!</li>
@@ -28,36 +29,39 @@ export const HelpModal = ({ isOpen, onClose }: HelpModalProps) => {
         </section>
 
         <section>
-          <h3 className="font-bold text-gray-900 dark:text-white mb-2">⌨️ Controls</h3>
+          <h3 className="font-bold text-gray-900 mb-2 text-lg">⌨️ Controls</h3>
           <div className="grid grid-cols-2 gap-2 text-sm">
-            <div className="bg-gray-100 dark:bg-gray-700 rounded p-2">
-              <span className="font-semibold">← →</span> Move
+            <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-3 shadow-sm">
+              <span className="font-bold text-purple-600">← →</span> Move
             </div>
-            <div className="bg-gray-100 dark:bg-gray-700 rounded p-2">
-              <span className="font-semibold">↑ Space</span> Rotate
+            <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-3 shadow-sm">
+              <span className="font-bold text-purple-600">↑ Space</span> Rotate
             </div>
-            <div className="bg-gray-100 dark:bg-gray-700 rounded p-2">
-              <span className="font-semibold">↓</span> Drop
+            <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-3 shadow-sm">
+              <span className="font-bold text-purple-600">↓</span> Drop
             </div>
-            <div className="bg-gray-100 dark:bg-gray-700 rounded p-2">
-              <span className="font-semibold">P</span> Pause
+            <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-3 shadow-sm">
+              <span className="font-bold text-purple-600">P</span> Pause
             </div>
           </div>
         </section>
 
-        <section className="bg-purple-100 dark:bg-purple-900/30 rounded-lg p-3">
-          <h3 className="font-bold text-purple-900 dark:text-purple-200 mb-1">💡 Pro Tip</h3>
-          <p className="text-sm text-purple-800 dark:text-purple-300">
+        <section className="bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl p-4 shadow-md">
+          <h3 className="font-bold text-purple-900 mb-2">💡 Pro Tip</h3>
+          <p className="text-sm text-purple-800">
             Try to form words consecutively to build a combo and maximize your score!
           </p>
         </section>
 
-        <button
+        <Button
           onClick={onClose}
-          className="w-full px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors mt-4"
+          variant="gradient"
+          size="lg"
+          className="w-full mt-4"
+          icon={<span>✓</span>}
         >
           Got it!
-        </button>
+        </Button>
       </div>
     </Modal>
   );
