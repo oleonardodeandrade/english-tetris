@@ -21,9 +21,6 @@
 
 <div align="center">
 
-### Initial Screen
-<img src=".github/images/inicial-screen.png" alt="Initial Screen" width="600"/>
-
 ### Gameplay
 <img src=".github/images/playing.png" alt="Gameplay" width="600"/>
 
