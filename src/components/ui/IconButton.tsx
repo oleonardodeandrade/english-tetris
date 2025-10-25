@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, ReactNode } from 'react';
+import type { ButtonHTMLAttributes, ReactNode } from 'react';
 
 type IconButtonVariant = 'ghost' | 'solid' | 'outline';
 type IconButtonSize = 'sm' | 'md' | 'lg';
