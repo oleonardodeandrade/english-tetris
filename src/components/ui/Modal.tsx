@@ -17,16 +17,16 @@ export const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
       onClick={onClose}
     >
       <div
-        className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto"
+        className="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl min-w-[400px] max-w-2xl w-full max-h-[90vh] overflow-y-auto border-2 border-white/50 animate-in zoom-in-95 duration-300"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <div className="flex items-center justify-between gap-8 p-6 border-b border-gray-200">
+          <h2 className="text-3xl font-black bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-gray-900 flex-1">
             {title}
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-2xl font-bold w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            className="text-gray-400 hover:text-gray-600 text-3xl font-bold w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-all duration-300 hover:scale-110 flex-shrink-0 ml-4"
           >
             ×
           </button>

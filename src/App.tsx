@@ -33,14 +33,14 @@ function App() {
   }, [foundWords.length]);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400 flex flex-col items-center justify-center p-4">
       <div className="flex items-center gap-4 mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-5xl font-black text-gray-900 bg-gradient-to-r from-white to-purple-100 bg-clip-text drop-shadow-2xl">
           English Tetris
         </h1>
         <button
           onClick={() => setShowHelp(true)}
-          className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-2xl w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          className="text-white hover:text-purple-100 text-2xl w-12 h-12 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 hover:scale-110 border border-white/30 shadow-lg"
           title="Help"
         >
           ?
@@ -50,7 +50,7 @@ function App() {
       {gameState === 'idle' && (
         <button
           onClick={startGame}
-          className="px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-colors"
+          className="px-8 py-4 bg-white text-purple-600 font-bold rounded-2xl hover:bg-purple-50 transition-all duration-300 hover:scale-105 shadow-2xl hover:shadow-purple-500/50 text-xl"
         >
           Start Game
         </button>
@@ -87,11 +87,11 @@ function App() {
 
           <div className="flex flex-col items-center">
             <Board board={board} />
-            <div className="text-center text-gray-700 dark:text-gray-300 mt-4">
-              <p className="font-semibold text-lg">
-                {gameState === 'paused' ? 'PAUSED' : 'PLAYING'}
+            <div className="text-center text-white mt-6 bg-white/20 backdrop-blur-md rounded-2xl p-4 border border-white/30">
+              <p className="font-bold text-xl mb-2">
+                {gameState === 'paused' ? '⏸ PAUSED' : '▶ PLAYING'}
               </p>
-              <p className="text-sm mt-2">
+              <p className="text-sm">
                 ← → : Move | ↑/Space: Rotate | ↓: Drop | P: Pause
               </p>
             </div>
