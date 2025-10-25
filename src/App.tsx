@@ -7,6 +7,8 @@ import { WordCelebration } from './components/ui/WordCelebration';
 import { GameOverModal } from './components/ui/GameOverModal';
 import { PauseModal } from './components/ui/PauseModal';
 import { HelpModal } from './components/ui/HelpModal';
+import { Button } from './components/ui/Button';
+import { IconButton } from './components/ui/IconButton';
 import { useGame } from './hooks/useGame';
 import { useKeyboard } from './hooks/useKeyboard';
 
@@ -38,22 +40,26 @@ function App() {
         <h1 className="text-5xl font-black text-gray-900 bg-gradient-to-r from-white to-purple-100 bg-clip-text drop-shadow-2xl">
           English Tetris
         </h1>
-        <button
+        <IconButton
           onClick={() => setShowHelp(true)}
-          className="text-white hover:text-purple-100 text-2xl w-12 h-12 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 hover:scale-110 border border-white/30 shadow-lg"
+          variant="ghost"
+          size="lg"
+          icon="?"
+          aria-label="Help"
           title="Help"
-        >
-          ?
-        </button>
+        />
       </div>
 
       {gameState === 'idle' && (
-        <button
+        <Button
           onClick={startGame}
-          className="px-8 py-4 bg-white text-purple-600 font-bold rounded-2xl hover:bg-purple-50 transition-all duration-300 hover:scale-105 shadow-2xl hover:shadow-purple-500/50 text-xl"
+          variant="primary"
+          size="xl"
+          icon={<span>🎮</span>}
+          iconPosition="left"
         >
           Start Game
-        </button>
+        </Button>
       )}
 
       <GameOverModal
